@@ -21,6 +21,9 @@ Seed: -963323667424106092
 
 Position: -139.746 102.0 -658.997
 
+ModList:
+![img.png](https://github.com/MCTeamPotato/Francium/blob/1165/images/modlist.png?raw=true)
+
 Entities and item entities have been cleared by [Cuneiform](https://www.curseforge.com/minecraft/mc-mods/cuneiform) commands /killall and /killitems
 
 You can see my play time is 4:29 below, and in these 269 seconds, I have never moved or change my mouse too much (almost completely still).
