@@ -1,4 +1,18 @@
+# Francium
+Francium is a Forge optimization mod that replaces some `Random` fields with `ThreadLocalRandom` for better performance and higher fps.
+
+This is inspired by [Faster Random](https://modrinth.com/mod/faster-random). However, Francium's implementation is wider and more rooted.
+
+ThreadLocalRandom has a property: its `setSeed` method is not a supported operation, Thus, as long as a Random field is not calling `setSeed`, Francium can replace it with ThreadLocalRandom.
+
+Client side: Optional
+
+Server side: Optional
 # Benchmark Info
+Minecraft version: 1.16.5
+
+Java version: Azul Zulu Java 17 (highly recommended, check out [ModernFix's wiki](https://github.com/embeddedt/ModernFix/wiki/1.16---required-arguments-for-Java-17)!)
+
 Weather: None
 
 Difficulty: Peaceful
@@ -14,10 +28,10 @@ You can see my play time is 4:29 below, and in these 269 seconds, I have never m
 This has been tested for three times, and the images below are from the third test.
 ## With Francium Installed
 Average FPS: 780 ~ 800
-![img.png](images/francium.png)
+![img.png](https://github.com/MCTeamPotato/Francium/blob/1165/images/francium.png?raw=true)
 ## Without Francium Installed
 Average FPS: 630 ~ 650
-![img.png](images/vanilla.png)
+![img.png](https://github.com/MCTeamPotato/Francium/blob/1165/images/vanilla.png?raw=true)
 
 # Compatibility
 Although there are currently no known compatibility issues, considering the slightly intrusive nature of the adjustments made by Francium, this mod may be incompatible with some other mods.
