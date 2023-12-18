@@ -1,7 +1,7 @@
 # Francium
 Francium is a Forge optimization mod that replaces some `Random` fields with `ThreadLocalRandom` for better performance and higher fps.
 
-This is inspired by [Faster Random](https://modrinth.com/mod/faster-random). However, Francium's implementation is wider and more rooted.
+This is inspired by [Faster Random](https://modrinth.com/mod/faster-random) (But Francium doesn't change world generation). However, Francium's implementation is wider and more rooted.
 
 ThreadLocalRandom has a property: its `setSeed` method is not a supported operation, Thus, as long as a Random field is not calling `setSeed`, Francium can replace it with ThreadLocalRandom.
 
@@ -9,6 +9,18 @@ Client side: Optional
 
 Server side: Optional
 # Benchmark Info
+```
+The below benchmark is outdated due to the security improvement in 1.0.0.
+```
+
+```
+Details: In Francium 1.0.0, To completely avoid the UnsupportedOperationException crash (and this is the only crash Francium may cause) of `ThreadLocalRandom#setSeed`, I did some security improvement so that if a Random field is setSeed, next it will no longer call ThreadLocalRandom. 
+```
+
+```
+For players, this security brings down performance improvement for a little bit, in my test my fps improvement dropped to 100 from 150.
+```
+
 Minecraft version: 1.16.5
 
 Java version: Azul Zulu Java 17 (highly recommended, check out [ModernFix's wiki](https://github.com/embeddedt/ModernFix/wiki/1.16---required-arguments-for-Java-17)!)
@@ -36,10 +48,12 @@ Average FPS: 780 ~ 800
 Average FPS: 630 ~ 650
 ![img.png](https://github.com/MCTeamPotato/Francium/blob/1165/images/vanilla.png?raw=true)
 
-# Compatibility
-Although there are currently no known compatibility issues, considering the slightly intrusive nature of the adjustments made by Francium, this mod may be incompatible with some other mods.
+# 1.19.2 ~ 1.20.1?
+Not currently. 
 
-Francium has tweaked your crash report so that if there is a crash caused by this mod, the header of the crash report will have this phrase: "This crash is most likely caused by Francium, please bring this crash report with you to report it!"
+In 1.19.2+, Mojang overhauled random number generation from Java's own Random to a custom RandomSource class. 
+
+So if Francium is to support higher versions, it may only be able to undergo simple replacements in specific classes much like Faster Random, and may not be conducive to fundamental reforms like it be in 1.16.5 and 1.18.2, optimization will also be much less effective.
 
 # Issue Report
 https://github.com/MCTeamPotato/Kasualix-Issue-Tracker
