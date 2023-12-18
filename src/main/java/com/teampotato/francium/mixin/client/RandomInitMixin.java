@@ -1,5 +1,6 @@
 package com.teampotato.francium.mixin.client;
 
+import com.teampotato.francium.FranciumRandom;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.particle.Particle;
@@ -13,12 +14,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Mixin({MusicManager.class, EndermanRenderer.class, GameRenderer.class, EnchantmentScreen.class, WeighedSoundEvents.class, ClientPacketListener.class, Particle.class, ParticleEngine.class})
 public abstract class RandomInitMixin {
     @Redirect(method = "<init>*", at = @At(value = "NEW", target = "()Ljava/util/Random;", remap = false))
     private Random useThreadLocalRandom() {
-        return ThreadLocalRandom.current();
+        return new FranciumRandom();
     }
 }

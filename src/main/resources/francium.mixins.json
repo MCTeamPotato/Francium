@@ -10,8 +10,7 @@
   "mixins": [
     "common.RandomClinitMixin",
     "common.RandomInitMixin",
-    "common.SquidMixin",
-    "debug.CrashReportMixin"
+    "common.SquidMixin"
   ],
   "client": [
     "client.RandomClinitMixin",
