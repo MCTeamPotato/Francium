@@ -5,17 +5,24 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class FranciumRandom extends Random {
     private final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
-    private Random random = /* blame Java field initialization qwq */ null;
-    private boolean seedSet;
+    private volatile Random random = null;
+    private volatile boolean seedSet;
 
     public void setSeed(long seed) {
-        if (this.random == null) this.random = new Random();
+        this.validateRandom();
         this.random.setSeed(seed);
         this.seedSet = true;
     }
 
+    private void validateRandom() {
+        if (this.random == null) {
+            this.random = new Random();
+        }
+    }
+
     public void nextBytes(byte[] bytes) {
         if (this.seedSet) {
+            this.validateRandom();
             this.random.nextBytes(bytes);
         } else {
             this.threadLocalRandom.nextBytes(bytes);
@@ -24,6 +31,7 @@ public class FranciumRandom extends Random {
 
     public int nextInt() {
         if (this.seedSet) {
+            this.validateRandom();
             return this.random.nextInt();
         } else {
             return this.threadLocalRandom.nextInt();
@@ -32,6 +40,7 @@ public class FranciumRandom extends Random {
 
     public int nextInt(int bound) {
         if (this.seedSet) {
+            this.validateRandom();
             return this.random.nextInt(bound);
         } else {
             return this.threadLocalRandom.nextInt(bound);
@@ -40,6 +49,7 @@ public class FranciumRandom extends Random {
 
     public long nextLong() {
         if (this.seedSet) {
+            this.validateRandom();
             return this.random.nextLong();
         } else {
             return this.threadLocalRandom.nextLong();
@@ -48,6 +58,7 @@ public class FranciumRandom extends Random {
 
     public boolean nextBoolean() {
         if (this.seedSet) {
+            this.validateRandom();
             return this.random.nextBoolean();
         } else {
             return this.threadLocalRandom.nextBoolean();
@@ -56,6 +67,7 @@ public class FranciumRandom extends Random {
 
     public float nextFloat() {
         if (this.seedSet) {
+            this.validateRandom();
             return this.random.nextFloat();
         } else {
             return this.threadLocalRandom.nextFloat();
@@ -64,6 +76,7 @@ public class FranciumRandom extends Random {
 
     public double nextDouble() {
         if (this.seedSet) {
+            this.validateRandom();
             return this.random.nextDouble();
         } else {
             return this.threadLocalRandom.nextDouble();
@@ -72,6 +85,7 @@ public class FranciumRandom extends Random {
 
     public double nextGaussian() {
         if (this.seedSet) {
+            this.validateRandom();
             return this.random.nextGaussian();
         } else {
             return this.threadLocalRandom.nextGaussian();
