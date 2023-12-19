@@ -6,20 +6,23 @@ import java.util.concurrent.ThreadLocalRandom;
 public class FranciumRandom extends Random {
     private final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
     private Random random = null;
-    private volatile boolean seedSet;
+    private volatile boolean seedSet, seedUpdated;
     private volatile long seed;
 
-    private synchronized void validateRandom() {
+    private void validateRandom() {
         if (this.random == null) {
             this.random = new Random(this.seed);
-        } else {
+            this.seedUpdated = false;
+        } else if (this.seedUpdated) {
             this.random.setSeed(this.seed);
+            this.seedUpdated = false;
         }
     }
 
     public void setSeed(long seed) {
         this.seed = seed;
         this.seedSet = true;
+        this.seedUpdated = true;
     }
 
     public void nextBytes(byte[] bytes) {
