@@ -5,19 +5,21 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class FranciumRandom extends Random {
     private final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
-    private volatile Random random = null;
+    private Random random = null;
     private volatile boolean seedSet;
+    private volatile long seed;
 
-    public void setSeed(long seed) {
-        this.validateRandom();
-        this.random.setSeed(seed);
-        this.seedSet = true;
+    private synchronized void validateRandom() {
+        if (this.random == null) {
+            this.random = new Random(this.seed);
+        } else {
+            this.random.setSeed(this.seed);
+        }
     }
 
-    private void validateRandom() {
-        if (this.random == null) {
-            this.random = new Random();
-        }
+    public void setSeed(long seed) {
+        this.seed = seed;
+        this.seedSet = true;
     }
 
     public void nextBytes(byte[] bytes) {
