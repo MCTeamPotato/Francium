@@ -8,6 +8,7 @@
     "defaultRequire": 0
   },
   "mixins": [
+    "common.EntityMixin",
     "common.RandomClinitMixin",
     "common.RandomInitMixin",
     "common.SquidMixin"

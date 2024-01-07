@@ -10,7 +10,5 @@ import java.util.Random;
 @Mixin(Squid.class)
 public abstract class SquidMixin {
     @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/util/Random;setSeed(J)V"))
-    private void fixSquidSpawn(Random instance, long l) {
-        //Are we really need this seed for squid tentacle speed? I don't think so.
-    }
+    private void avoidSetSeedInSquid(Random instance, long l) {}
 }
